@@ -80,9 +80,9 @@ export default function HomePage() {
   return (
     <main className="flex-1">
       {/* ───────── HERO ───────── */}
-      <section className="relative bg-brand overflow-hidden">
+      <section className="bg-brand">
         {/* nav */}
-        <nav className="relative z-10 flex items-center justify-between max-w-6xl mx-auto px-6 pt-6">
+        <nav className="flex items-center justify-between max-w-6xl mx-auto px-6 pt-6">
           <Wordmark />
           <a
             href="https://season.golf"
@@ -93,7 +93,7 @@ export default function HomePage() {
         </nav>
 
         {/* content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-8">
+        <div className="max-w-6xl mx-auto px-6 pt-16 pb-6">
           <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-12 lg:gap-8">
             {/* left – text & search */}
             <div className="text-center lg:text-left lg:pt-12 lg:max-w-lg flex-shrink-0">
@@ -120,8 +120,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* subtle gradient at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cream to-transparent" />
       </section>
 
       {/* ───────── STOP COUNTING ───────── */}
