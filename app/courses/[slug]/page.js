@@ -2,6 +2,8 @@ import { supabase } from "@/lib/supabase"
 import { slugify } from "@/lib/slugify"
 import { notFound } from "next/navigation"
 
+export const revalidate = 3600
+
 // ---------------------------------------------------------------------------
 // Static generation for all courses
 // ---------------------------------------------------------------------------
