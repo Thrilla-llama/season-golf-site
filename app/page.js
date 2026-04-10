@@ -93,10 +93,10 @@ export default function HomePage() {
         </nav>
 
         {/* content */}
-        <div className="max-w-6xl mx-auto px-6 pt-16 pb-6">
+        <div className="max-w-6xl mx-auto px-6 pt-16 pb-10">
           <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-12 lg:gap-8">
-            {/* left – text & search */}
-            <div className="text-center lg:text-left lg:pt-12 lg:max-w-lg flex-shrink-0">
+            {/* left – text & search (drives hero height) */}
+            <div className="text-center lg:text-left lg:pt-12 lg:pb-10 lg:max-w-lg flex-shrink-0">
               <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-5">
                 Focus on your
                 <br />
@@ -108,9 +108,9 @@ export default function HomePage() {
               <CourseSearch />
             </div>
 
-            {/* right – phone mockups */}
-            <div className="flex justify-center items-end gap-0 flex-shrink-0">
-              <IPhoneFrame className="-mr-6 translate-y-4 rotate-[-6deg] opacity-90 drop-shadow-2xl">
+            {/* right – phone mockups (scaled to fit within text height) */}
+            <div className="flex justify-center items-center gap-0 flex-shrink-0 lg:self-center lg:scale-75 lg:origin-center">
+              <IPhoneFrame className="-mr-6 rotate-[-6deg] opacity-90 drop-shadow-2xl">
                 <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
               </IPhoneFrame>
               <IPhoneFrame className="relative z-10 rotate-[3deg] drop-shadow-2xl">
