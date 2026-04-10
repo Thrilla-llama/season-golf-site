@@ -93,27 +93,30 @@ export default function HomePage() {
         </nav>
 
         {/* content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-5">
-            Focus on your
-            <br />
-            next shot.
-          </h1>
-          <p className="text-lg text-white/60 max-w-md mx-auto mb-8">
-            Play match play. Every round.
-          </p>
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-12 lg:gap-8">
+            {/* left – text & search */}
+            <div className="text-center lg:text-left lg:pt-12 lg:max-w-lg flex-shrink-0">
+              <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-5">
+                Focus on your
+                <br />
+                next shot.
+              </h1>
+              <p className="text-lg text-white/60 mb-8">
+                Play match play. Every round.
+              </p>
+              <CourseSearch />
+            </div>
 
-          {/* search bar */}
-          <CourseSearch />
-
-          {/* phone mockups */}
-          <div className="flex justify-center items-end gap-0 mt-14 -mb-2">
-            <IPhoneFrame className="-mr-6 translate-y-4 rotate-[-4deg] opacity-90">
-              <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
-            </IPhoneFrame>
-            <IPhoneFrame className="relative z-10">
-              <img src="/app-scorecard.png" alt="Scorecard screen" className="w-full h-full object-cover" />
-            </IPhoneFrame>
+            {/* right – phone mockups */}
+            <div className="flex justify-center items-end gap-0 flex-shrink-0">
+              <IPhoneFrame className="-mr-6 translate-y-4 rotate-[-6deg] opacity-90 drop-shadow-2xl">
+                <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
+              </IPhoneFrame>
+              <IPhoneFrame className="relative z-10 rotate-[3deg] drop-shadow-2xl">
+                <img src="/app-scorecard.png" alt="Scorecard screen" className="w-full h-full object-cover" />
+              </IPhoneFrame>
+            </div>
           </div>
         </div>
 
@@ -126,8 +129,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 py-24">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* left – image */}
-            <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/stop-counting.jpeg" alt="Stop Counting – match play result" className="w-full rounded-2xl shadow-lg" />
+            <div className="flex-shrink-0 max-w-sm w-full" style={{ filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.12))" }}>
+              <img src="/stop-counting.jpeg" alt="Stop Counting – match play result" className="w-full rounded-2xl" />
             </div>
             {/* right – copy */}
             <div className="max-w-lg">
@@ -149,8 +152,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 py-24 border-t border-brand/5">
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             {/* right – image */}
-            <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/know-identity.jpeg" alt="Golf Identity profile" className="w-full rounded-2xl shadow-lg" />
+            <div className="flex-shrink-0 max-w-sm w-full" style={{ filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.12))" }}>
+              <img src="/know-identity.jpeg" alt="Golf Identity profile" className="w-full rounded-2xl" />
             </div>
             {/* left – copy */}
             <div className="max-w-lg">
@@ -173,8 +176,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6 py-24 border-t border-brand/5">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* left – image */}
-            <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/win-season.jpeg" alt="Season standings" className="w-full rounded-2xl shadow-lg" />
+            <div className="flex-shrink-0 max-w-sm w-full" style={{ filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.12))" }}>
+              <img src="/win-season.jpeg" alt="Season standings" className="w-full rounded-2xl" />
             </div>
             {/* right – copy */}
             <div className="max-w-lg">

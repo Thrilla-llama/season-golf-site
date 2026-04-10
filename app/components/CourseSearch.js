@@ -19,7 +19,7 @@ function slugify(name) {
 function SearchIcon() {
   return (
     <svg
-      className="w-5 h-5 text-gray-400"
+      className="w-5 h-5 text-white/50"
       fill="none"
       stroke="currentColor"
       strokeWidth={2}
@@ -78,8 +78,8 @@ export default function CourseSearch() {
   }, [query])
 
   return (
-    <div ref={wrapperRef} className="relative max-w-md w-full mx-auto">
-      <div className="flex items-center gap-3 bg-white rounded-full pl-5 pr-4 py-3 shadow-lg">
+    <div ref={wrapperRef} className="relative max-w-md w-full">
+      <div className="flex items-center gap-3 bg-[#1a3a1a] border border-[#2d5a2d] rounded-full pl-5 pr-4 py-3">
         <SearchIcon />
         <input
           type="text"
@@ -89,10 +89,10 @@ export default function CourseSearch() {
             if (results.length > 0) setOpen(true)
           }}
           placeholder="Search Georgia courses..."
-          className="flex-1 text-sm text-gray-800 placeholder-gray-400 outline-none bg-transparent"
+          className="flex-1 text-sm text-white placeholder-white/40 outline-none bg-transparent"
         />
         {loading && (
-          <div className="w-4 h-4 border-2 border-gray-300 border-t-brand rounded-full animate-spin" />
+          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
         )}
       </div>
 
