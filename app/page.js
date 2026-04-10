@@ -109,7 +109,7 @@ export default function HomePage() {
             </div>
 
             {/* right – phone mockups */}
-            <div className="flex justify-end items-end gap-0 flex-shrink-0 lg:self-stretch lg:items-center lg:py-2">
+            <div className="flex justify-end items-end gap-0 flex-shrink-0 lg:self-stretch lg:items-start lg:pt-0">
               <IPhoneFrame className="-mr-8 rotate-[-6deg] opacity-90 drop-shadow-2xl lg:w-[286px]">
                 <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
               </IPhoneFrame>
