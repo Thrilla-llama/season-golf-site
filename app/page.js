@@ -16,7 +16,7 @@ function Wordmark() {
 /* ─── iPhone 15 Pro frame wrapper ─── */
 function IPhoneFrame({ children, className = "" }) {
   return (
-    <div className={`relative w-[220px] h-[440px] ${className}`}>
+    <div className={`relative aspect-[1/2] w-[220px] ${className}`}>
       <svg
         viewBox="0 0 220 440"
         fill="none"
@@ -108,12 +108,12 @@ export default function HomePage() {
               <CourseSearch />
             </div>
 
-            {/* right – phone mockups (scaled to fit within text height) */}
-            <div className="flex justify-center items-center gap-0 flex-shrink-0 lg:self-center lg:scale-75 lg:origin-center">
-              <IPhoneFrame className="-mr-6 rotate-[-6deg] opacity-90 drop-shadow-2xl">
+            {/* right – phone mockups */}
+            <div className="flex justify-end items-end gap-0 flex-shrink-0 lg:self-stretch lg:items-center lg:py-2">
+              <IPhoneFrame className="-mr-8 rotate-[-6deg] opacity-90 drop-shadow-2xl lg:w-[220px]">
                 <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
               </IPhoneFrame>
-              <IPhoneFrame className="relative z-10 rotate-[3deg] drop-shadow-2xl">
+              <IPhoneFrame className="relative z-10 rotate-[3deg] drop-shadow-2xl lg:w-[220px]">
                 <img src="/app-scorecard.png" alt="Scorecard screen" className="w-full h-full object-cover" />
               </IPhoneFrame>
             </div>
