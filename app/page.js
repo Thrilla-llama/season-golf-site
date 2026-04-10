@@ -8,7 +8,7 @@ function Wordmark() {
     <img
       src="/wordmark-white.png"
       alt="Season Golf"
-      className="h-8 w-auto"
+      className="h-32 w-auto"
     />
   )
 }
