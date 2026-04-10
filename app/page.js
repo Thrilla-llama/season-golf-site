@@ -1,4 +1,5 @@
 import Link from "next/link"
+import CourseSearch from "./components/CourseSearch"
 
 /* ─────────────────────────── tiny sub-components ─────────────────────────── */
 
@@ -10,35 +11,208 @@ function Wordmark() {
   )
 }
 
-function SearchIcon() {
+/* ─── iPhone 15 Pro frame wrapper ─── */
+function IPhoneFrame({ children, className = "" }) {
   return (
-    <svg
-      className="w-5 h-5 text-gray-400"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <circle cx={11} cy={11} r={8} />
-      <path d="m21 21-4.35-4.35" strokeLinecap="round" />
-    </svg>
+    <div className={`relative w-[220px] h-[440px] ${className}`}>
+      <svg
+        viewBox="0 0 220 440"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+      >
+        {/* outer frame */}
+        <rect x="2" y="2" width="216" height="436" rx="36" ry="36"
+          stroke="#1a1a1a" strokeWidth="4" fill="none" />
+        {/* inner bezel */}
+        <rect x="6" y="6" width="208" height="428" rx="33" ry="33"
+          stroke="#2a2a2a" strokeWidth="1" fill="none" />
+        {/* dynamic island */}
+        <rect x="72" y="12" width="76" height="22" rx="11"
+          fill="#1a1a1a" />
+        {/* side button right – power */}
+        <rect x="218" y="120" width="4" height="50" rx="2" fill="#2a2a2a" />
+        {/* side buttons left – volume up */}
+        <rect x="-2" y="110" width="4" height="30" rx="2" fill="#2a2a2a" />
+        {/* side buttons left – volume down */}
+        <rect x="-2" y="150" width="4" height="30" rx="2" fill="#2a2a2a" />
+        {/* side buttons left – action button */}
+        <rect x="-2" y="80" width="4" height="18" rx="2" fill="#2a2a2a" />
+      </svg>
+      {/* screen area */}
+      <div className="absolute inset-[6px] rounded-[33px] overflow-hidden bg-white">
+        {children}
+      </div>
+    </div>
   )
 }
 
-/* phone mockup placeholder */
-function PhoneMockup({ label, className = "" }) {
+/* ─── Scorecard screen content ─── */
+function ScorecardScreen() {
+  const holes  = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const pars   = [4, 3, 5, 4, 4, 3, 5, 4, 4]
+  const hdcps  = [5, 9, 1, 3, 7, 13, 11, 15, 17]
+
   return (
-    <div
-      className={`w-[220px] h-[440px] rounded-[36px] border-[6px] border-white/20 bg-white/10 backdrop-blur-sm flex flex-col items-center justify-center shadow-2xl ${className}`}
-    >
-      <div className="w-16 h-1.5 rounded-full bg-white/20 mb-8" />
-      <div className="w-28 h-3 rounded bg-white/15 mb-3" />
-      <div className="w-20 h-3 rounded bg-white/10 mb-6" />
-      <div className="w-32 h-32 rounded-2xl bg-white/10 mb-6 flex items-center justify-center">
-        <span className="text-white/30 text-xs font-medium">{label}</span>
+    <div className="w-full h-full flex flex-col bg-[#f8f8f5] text-[6px] leading-tight">
+      {/* status bar */}
+      <div className="flex items-center justify-between px-4 pt-8 pb-1">
+        <span className="font-semibold text-[5px] text-gray-500">9:41</span>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-1.5 border border-gray-400 rounded-[1px] relative">
+            <div className="absolute inset-[0.5px] right-[1px] bg-gray-500 rounded-[0.5px]" style={{width:'60%'}} />
+          </div>
+        </div>
       </div>
-      <div className="w-24 h-3 rounded bg-white/10 mb-2" />
-      <div className="w-20 h-3 rounded bg-white/8" />
+
+      {/* header */}
+      <div className="bg-brand text-white px-3 py-2 text-center">
+        <p className="font-bold text-[7px]">Charlie Yates Golf Course</p>
+        <p className="text-[5px] opacity-70">Black Tees</p>
+      </div>
+
+      {/* scorecard table */}
+      <div className="px-1.5 pt-2 flex-1">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-0.5 py-0.5 text-left text-gray-500 font-medium">Hole</th>
+              {holes.map(h => (
+                <th key={h} className="px-0.5 py-0.5 text-center font-medium text-gray-700 w-[16px]">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-gray-100">
+              <td className="px-0.5 py-0.5 text-gray-500 font-medium">Par</td>
+              {pars.map((p,i) => (
+                <td key={i} className="px-0.5 py-0.5 text-center text-gray-600">{p}</td>
+              ))}
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="px-0.5 py-0.5 text-gray-500 font-medium">HDCP</td>
+              {hdcps.map((h,i) => (
+                <td key={i} className="px-0.5 py-0.5 text-center text-gray-400">{h}</td>
+              ))}
+            </tr>
+            <tr>
+              <td className="px-0.5 py-0.5 text-brand font-semibold">You</td>
+              {holes.map((h,i) => (
+                <td key={i} className="px-0.5 py-0.5 text-center text-gray-300">{i === 0 ? "4" : "–"}</td>
+              ))}
+            </tr>
+            <tr className="bg-gray-50">
+              <td className="px-0.5 py-0.5 text-gray-500 font-medium">Opp</td>
+              {holes.map((h,i) => (
+                <td key={i} className="px-0.5 py-0.5 text-center text-gray-300">{i === 0 ? "5" : "–"}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+
+        {/* match status */}
+        <div className="flex items-center justify-center gap-1 mt-2">
+          <span className="w-2 h-2 rounded-full bg-brand" />
+          <span className="text-[5px] text-brand font-semibold">1 UP after 1</span>
+        </div>
+      </div>
+
+      {/* bottom entry card */}
+      <div className="bg-white border-t border-gray-200 px-3 py-2 mt-auto">
+        <p className="text-center text-[6px] text-gray-500 mb-1.5">
+          Enter score for <span className="font-bold text-gray-700">Hole 2</span> &middot; Par 3 &middot; HDCP 9
+        </p>
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500">–</button>
+          <span className="text-[14px] font-bold text-gray-800">3</span>
+          <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-500">+</button>
+        </div>
+        <div className="bg-brand text-white text-center py-1.5 rounded-lg text-[6px] font-bold">
+          Post Hole Score
+        </div>
+      </div>
+
+      {/* home indicator */}
+      <div className="flex justify-center py-1">
+        <div className="w-10 h-[3px] rounded-full bg-gray-300" />
+      </div>
+    </div>
+  )
+}
+
+/* ─── Match notification screen content ─── */
+function MatchNotificationScreen() {
+  const holeDots = [
+    "win","loss","win","win","tie","loss","win","win","loss",
+    "win","tie","win","loss","win","win","win","tie","current",
+  ]
+  const dotColor = {
+    win: "bg-brand",
+    loss: "bg-red-400",
+    tie: "bg-gray-300",
+    current: "bg-gold animate-pulse",
+  }
+
+  return (
+    <div className="w-full h-full flex flex-col bg-[#f8f8f5]">
+      {/* status bar */}
+      <div className="flex items-center justify-between px-4 pt-8 pb-1 text-[5px]">
+        <span className="font-semibold text-gray-500">9:41</span>
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-1.5 border border-gray-400 rounded-[1px] relative">
+            <div className="absolute inset-[0.5px] right-[1px] bg-gray-500 rounded-[0.5px]" style={{width:'60%'}} />
+          </div>
+        </div>
+      </div>
+
+      {/* Season Golf wordmark */}
+      <div className="text-center pt-4 pb-2">
+        <span className="font-serif italic text-[11px] text-brand tracking-tight">
+          Season Golf
+        </span>
+      </div>
+
+      {/* notification card */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4">
+        <div className="bg-white rounded-xl shadow-md p-4 w-full">
+          {/* match header */}
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-6 h-6 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-[6px]">
+              PS
+            </div>
+            <div>
+              <p className="text-[7px] font-semibold text-brand">You vs Hunter</p>
+              <p className="text-[5px] text-gray-400">Charlie Yates GC &middot; Hole 18</p>
+            </div>
+            <div className="ml-auto bg-brand/10 text-brand font-bold text-[6px] px-2 py-0.5 rounded-full">
+              1 UP
+            </div>
+          </div>
+
+          {/* putting notification */}
+          <div className="bg-brand/5 rounded-lg p-2 mb-3 text-center">
+            <p className="text-[7px] text-brand font-medium">Hunter is putting...</p>
+            <p className="text-[5px] text-gray-400 mt-0.5">Waiting for opponent score</p>
+          </div>
+
+          {/* hole dots */}
+          <div>
+            <p className="text-[5px] uppercase tracking-wider text-gray-400 mb-1 font-medium">
+              Hole by Hole
+            </p>
+            <div className="flex flex-wrap gap-[3px]">
+              {holeDots.map((h, i) => (
+                <span key={i} className={`w-[7px] h-[7px] rounded-full ${dotColor[h]}`} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* home indicator */}
+      <div className="flex justify-center py-1.5">
+        <div className="w-10 h-[3px] rounded-full bg-gray-300" />
+      </div>
     </div>
   )
 }
@@ -297,24 +471,16 @@ export default function HomePage() {
           </p>
 
           {/* search bar */}
-          <Link
-            href="/courses"
-            className="inline-flex items-center gap-3 bg-white rounded-full pl-5 pr-4 py-3 shadow-lg hover:shadow-xl transition max-w-md w-full"
-          >
-            <SearchIcon />
-            <span className="text-gray-400 text-sm">Search Georgia courses…</span>
-          </Link>
+          <CourseSearch />
 
           {/* phone mockups */}
           <div className="flex justify-center items-end gap-0 mt-14 -mb-2">
-            <PhoneMockup
-              label="Match Play"
-              className="-mr-6 translate-y-4 rotate-[-4deg] opacity-90"
-            />
-            <PhoneMockup
-              label="Scorecard"
-              className="relative z-10"
-            />
+            <IPhoneFrame className="-mr-6 translate-y-4 rotate-[-4deg] opacity-90">
+              <MatchNotificationScreen />
+            </IPhoneFrame>
+            <IPhoneFrame className="relative z-10">
+              <ScorecardScreen />
+            </IPhoneFrame>
           </div>
         </div>
 
