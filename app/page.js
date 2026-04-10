@@ -6,7 +6,7 @@ import CourseSearch from "./components/CourseSearch"
 function Wordmark() {
   return (
     <img
-      src="/season-golf-wordmark-white-C-prM_3J.png"
+      src="/wordmark-white.png"
       alt="Season Golf"
       className="h-8 w-auto"
     />
@@ -109,10 +109,10 @@ export default function HomePage() {
           {/* phone mockups */}
           <div className="flex justify-center items-end gap-0 mt-14 -mb-2">
             <IPhoneFrame className="-mr-6 translate-y-4 rotate-[-4deg] opacity-90">
-              <img src="/Focus%20on%20your%20next%20shot%202.PNG" alt="Match play screen" className="w-full h-full object-cover" />
+              <img src="/app-match.png" alt="Match play screen" className="w-full h-full object-cover" />
             </IPhoneFrame>
             <IPhoneFrame className="relative z-10">
-              <img src="/Focus%20on%20your%20next%20shot%201.PNG" alt="Scorecard screen" className="w-full h-full object-cover" />
+              <img src="/app-scorecard.png" alt="Scorecard screen" className="w-full h-full object-cover" />
             </IPhoneFrame>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* left – image */}
             <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/Stop%20Counting.jpeg" alt="Stop Counting – match play result" className="w-full rounded-2xl shadow-lg" />
+              <img src="/stop-counting.jpeg" alt="Stop Counting – match play result" className="w-full rounded-2xl shadow-lg" />
             </div>
             {/* right – copy */}
             <div className="max-w-lg">
@@ -150,7 +150,7 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             {/* right – image */}
             <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/Know%20your%20identity.jpeg" alt="Golf Identity profile" className="w-full rounded-2xl shadow-lg" />
+              <img src="/know-identity.jpeg" alt="Golf Identity profile" className="w-full rounded-2xl shadow-lg" />
             </div>
             {/* left – copy */}
             <div className="max-w-lg">
@@ -174,7 +174,7 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
             {/* left – image */}
             <div className="flex-shrink-0 max-w-sm w-full">
-              <img src="/Win%20the%20Season.jpeg" alt="Season standings" className="w-full rounded-2xl shadow-lg" />
+              <img src="/win-season.jpeg" alt="Season standings" className="w-full rounded-2xl shadow-lg" />
             </div>
             {/* right – copy */}
             <div className="max-w-lg">
