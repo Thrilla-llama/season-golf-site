@@ -194,24 +194,13 @@ function GhostLeaderboard() {
   )
 }
 
-// Placeholder review card
-function ReviewCard({ index }) {
-  return (
-    <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center text-brand font-bold text-sm">
-          G
-        </div>
-        <span className="font-medium text-sm">Google Reviewer</span>
-        <span className="text-yellow-500 text-sm ml-auto">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      </div>
-      <p className="text-sm text-gray-600 leading-relaxed">
-        {index === 0
-          ? "Great course with excellent conditions. The layout is challenging but fair. Definitely recommend for any skill level."
-          : "Beautiful scenery and well-maintained greens. Staff was friendly and the pace of play was good. Will be back!"}
-      </p>
-    </div>
-  )
+// Build fresh Google Places photo URL from a stored URL
+function freshPhotoUrl(storedUrl) {
+  // Extract the photo resource name: places/{id}/photos/{ref}
+  const match = storedUrl.match(/(places\/[^/]+\/photos\/[^/]+)/)
+  if (!match) return storedUrl
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY
+  return `https://places.googleapis.com/v1/${match[1]}/media?maxWidthPx=800&key=${apiKey}`
 }
 
 // Photo strip component
@@ -238,7 +227,7 @@ function PhotoStrip({ photos }) {
       {display.map((url, i) => (
         <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden bg-gray-100">
           <img
-            src={url}
+            src={freshPhotoUrl(url)}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -329,15 +318,6 @@ export default async function CourseDetailPage({ params }) {
           ) : (
             <GhostLeaderboard />
           )}
-        </section>
-
-        {/* Google Reviews */}
-        <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Google Reviews</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <ReviewCard index={0} />
-            <ReviewCard index={1} />
-          </div>
         </section>
 
         {/* About */}
