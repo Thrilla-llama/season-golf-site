@@ -4,7 +4,7 @@ import { getPosts } from "@/lib/beehiiv"
 export const revalidate = 3600
 
 export const metadata = {
-  title: "Blog",
+  title: "Match Report",
   description:
     "Match play strategy, course spotlights, and updates from Season Golf.",
 }
@@ -25,7 +25,7 @@ export default async function BlogPage() {
             />
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">
-            Blog
+            Match Report
           </h1>
           <p className="text-lg text-white/60">
             Match play strategy, course spotlights, and updates from Season

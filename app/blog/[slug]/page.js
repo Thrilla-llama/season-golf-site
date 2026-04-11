@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }) {
             href="/blog"
             className="text-sm text-white/50 hover:text-white/80 transition"
           >
-            &larr; All posts
+            &larr; Match Report
           </Link>
         </div>
       </div>
