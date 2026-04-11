@@ -21,7 +21,7 @@ export default async function BlogPage() {
             <img
               src="/wordmark-white.png"
               alt="Season Golf"
-              className="h-8 w-auto mb-10"
+              className="h-32 w-auto mb-10"
             />
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3">

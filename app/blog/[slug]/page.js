@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }) {
             <img
               src="/wordmark-white.png"
               alt="Season Golf"
-              className="h-8 w-auto mb-6"
+              className="h-32 w-auto mb-6"
             />
           </Link>
           <Link
