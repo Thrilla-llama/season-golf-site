@@ -95,12 +95,14 @@ async function getLeaderboard(courseSlug) {
     }
   }
 
-  // Resolve display names + handicaps from `profiles`. No direct FK exists
-  // from match_players → profiles (both share auth.users), so a second query.
+  // Resolve display names from `profiles`. No direct FK from match_players
+  // → profiles (both share auth.users), so a second query.
   const userIds = [...byUser.keys()]
   const { data: profiles } = await lovableSupabase
     .from("profiles")
-    .select("user_id, display_name, public_name, handicap_index")
+    .select(
+      "user_id, public_name, first_name, last_name, display_name, is_test_user"
+    )
     .in("user_id", userIds)
 
   const profileByUser = new Map((profiles ?? []).map((p) => [p.user_id, p]))
@@ -108,15 +110,23 @@ async function getLeaderboard(courseSlug) {
   const players = [...byUser.values()]
     .map((p) => {
       const profile = profileByUser.get(p.userId)
+      const fullName =
+        profile?.first_name && profile?.last_name
+          ? `${profile.first_name} ${profile.last_name}`
+          : null
       return {
         ...p,
-        name: profile?.display_name ?? profile?.public_name ?? null,
-        handicap: profile?.handicap_index ?? null,
+        name:
+          profile?.public_name ??
+          fullName ??
+          profile?.display_name ??
+          null,
+        isTestUser: profile?.is_test_user ?? false,
         matches: p.wins + p.losses + p.halves,
         points: p.wins + 0.5 * p.halves,
       }
     })
-    .filter((p) => p.matches > 0 && p.name)
+    .filter((p) => p.matches > 0 && p.name && !p.isTestUser)
 
   players.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points
@@ -131,7 +141,7 @@ async function getLeaderboard(courseSlug) {
       playerId: p.userId,
       record: `${p.wins}-${p.losses}-${p.halves}`,
       points: p.points,
-      handicap: p.handicap,
+      handicap: null,
       matches: p.matches,
     })),
     // Distinct completed matches. Can't halve participation count since
