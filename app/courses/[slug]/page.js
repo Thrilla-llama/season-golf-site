@@ -63,36 +63,28 @@ async function getLeaderboard(courseSlug) {
   if (!lovableCourses || lovableCourses.length === 0) return empty
 
   const courseId = lovableCourses[0].course_id
-  const lovableSlug = lovableCourses[0].slug
 
-  // Pull every participant row for COMPLETED matches at this course.
-  // result_type is from the PLAYER's perspective, so OPPONENT gets the inverse.
+  // Humans-only match participants at this course. Posted_player personas
+  // (AI opponents) are excluded — their `user_id` is null.
+  // result_type on `matches` is from the PLAYER role's perspective; the
+  // OPPONENT gets the inverse.
   const { data: mps } = await lovableSupabase
     .from("match_players")
-    .select(
-      "role, posted_player_id, matches!inner(result_type, status, course_id), posted_players(posted_player_id, display_name, handicap_index)"
-    )
+    .select("role, user_id, matches!inner(match_id, result_type, status, course_id)")
     .eq("matches.course_id", courseId)
     .eq("matches.status", "COMPLETED")
-    .not("posted_player_id", "is", null)
+    .not("user_id", "is", null)
 
-  if (!mps) return empty
+  if (!mps || mps.length === 0) return empty
 
-  const byPlayer = new Map()
+  const byUser = new Map()
   for (const mp of mps) {
-    if (!mp.posted_players || !mp.matches) continue
-    const pid = mp.posted_player_id
-    if (!byPlayer.has(pid)) {
-      byPlayer.set(pid, {
-        playerId: pid,
-        name: mp.posted_players.display_name,
-        handicap: mp.posted_players.handicap_index,
-        wins: 0,
-        losses: 0,
-        halves: 0,
-      })
+    if (!mp.matches) continue
+    const uid = mp.user_id
+    if (!byUser.has(uid)) {
+      byUser.set(uid, { userId: uid, wins: 0, losses: 0, halves: 0 })
     }
-    const agg = byPlayer.get(pid)
+    const agg = byUser.get(uid)
     const rt = mp.matches.result_type
     if (rt === "HALVE") {
       agg.halves++
@@ -103,38 +95,50 @@ async function getLeaderboard(courseSlug) {
     }
   }
 
-  const players = [...byPlayer.values()]
-    .map((p) => ({
-      ...p,
-      matches: p.wins + p.losses + p.halves,
-      points: p.wins + 0.5 * p.halves,
-    }))
-    .filter((p) => p.matches > 0)
+  // Resolve display names + handicaps from `profiles`. No direct FK exists
+  // from match_players → profiles (both share auth.users), so a second query.
+  const userIds = [...byUser.keys()]
+  const { data: profiles } = await lovableSupabase
+    .from("profiles")
+    .select("user_id, display_name, public_name, handicap_index")
+    .in("user_id", userIds)
+
+  const profileByUser = new Map((profiles ?? []).map((p) => [p.user_id, p]))
+
+  const players = [...byUser.values()]
+    .map((p) => {
+      const profile = profileByUser.get(p.userId)
+      return {
+        ...p,
+        name: profile?.display_name ?? profile?.public_name ?? null,
+        handicap: profile?.handicap_index ?? null,
+        matches: p.wins + p.losses + p.halves,
+        points: p.wins + 0.5 * p.halves,
+      }
+    })
+    .filter((p) => p.matches > 0 && p.name)
 
   players.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points
     if (b.matches !== a.matches) return b.matches - a.matches
-    return (a.name ?? "").localeCompare(b.name ?? "")
+    return a.name.localeCompare(b.name)
   })
-
-  const totalMatchParticipations = players.reduce(
-    (sum, p) => sum + p.matches,
-    0
-  )
 
   return {
     players: players.slice(0, 10).map((p, i) => ({
       rank: i + 1,
       name: p.name,
-      playerId: p.playerId,
+      playerId: p.userId,
       record: `${p.wins}-${p.losses}-${p.halves}`,
       points: p.points,
       handicap: p.handicap,
       matches: p.matches,
-      courseSlug: lovableSlug,
     })),
-    // Each match contributes 2 participations (PLAYER + OPPONENT), so halve.
-    totalMatches: Math.round(totalMatchParticipations / 2),
+    // Distinct completed matches. Can't halve participation count since
+    // most matches are human-vs-AI (only one `user_id` row per match).
+    totalMatches: new Set(
+      mps.map((m) => m.matches?.match_id).filter(Boolean)
+    ).size,
     totalPlayers: players.length,
   }
 }
@@ -179,7 +183,7 @@ function Leaderboard({ players }) {
             <td className="py-3 pr-4 font-medium">{p.rank}</td>
             <td className="py-3 pr-4">
               <a
-                href={`https://season.golf/play/${p.courseSlug}?opponent=${p.playerId}`}
+                href={`https://season.golf/course-selection?liveOpponentId=${p.playerId}&liveOpponentName=${encodeURIComponent(p.name)}`}
                 className="text-brand font-medium hover:underline"
               >
                 {p.name}
