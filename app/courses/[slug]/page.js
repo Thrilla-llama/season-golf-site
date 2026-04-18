@@ -134,6 +134,15 @@ async function getLeaderboard(courseSlug) {
     return a.name.localeCompare(b.name)
   })
 
+  // Only count matches involving surviving (non-test, displayable) users.
+  const visibleUserIds = new Set(players.map((p) => p.userId))
+  const visibleMatchIds = new Set(
+    mps
+      .filter((m) => visibleUserIds.has(m.user_id))
+      .map((m) => m.matches?.match_id)
+      .filter(Boolean)
+  )
+
   return {
     players: players.slice(0, 10).map((p, i) => ({
       rank: i + 1,
@@ -144,11 +153,7 @@ async function getLeaderboard(courseSlug) {
       handicap: null,
       matches: p.matches,
     })),
-    // Distinct completed matches. Can't halve participation count since
-    // most matches are human-vs-AI (only one `user_id` row per match).
-    totalMatches: new Set(
-      mps.map((m) => m.matches?.match_id).filter(Boolean)
-    ).size,
+    totalMatches: visibleMatchIds.size,
     totalPlayers: players.length,
   }
 }
